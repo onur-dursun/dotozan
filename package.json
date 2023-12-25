@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nodegui/nodegui": "^0.57.1",
+    "@tropicbliss/symphonia": "^0.2.19",
     "copy-webpack-plugin": "^11.0.0",
     "sound-play": "^1.1.0"
   },
