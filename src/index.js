@@ -1,7 +1,11 @@
 const { QMainWindow, QWidget, FlexLayout, QLabel } = require("@nodegui/nodegui");
+const sound = require("sound-play");
+const path = require('path');
+const url = require('url');
 
 const rootView = new QWidget();
-rootView.setLayout(new FlexLayout());
+const rootLayout = new FlexLayout();
+rootView.setLayout(rootLayout);
 rootView.setObjectName("rootView");
 
 // Create two widgets - one label and one view
@@ -13,8 +17,8 @@ const view = new QWidget();
 view.setObjectName("view");
 
 // Now tell rootView layout that the label and the other view are its children
-rootView.layout.addWidget(label);
-rootView.layout.addWidget(view);
+rootLayout.addWidget(label);
+rootLayout.addWidget(view);
 
 const win = new QMainWindow();
 win.setStyleSheet("background:transparent;");
@@ -24,3 +28,7 @@ win.setCentralWidget(rootView);
 win.show();
 
 global.win = win; // prevent's gc of win
+
+const filePath = path.join(__dirname, "assets\\stack_alarm.mp3");
+console.log(filePath);
+sound.play(filePath);
