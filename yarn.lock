@@ -117,6 +117,22 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
+"@tropicbliss/symphonia-win32-x64-msvc@0.2.19":
+  "integrity" "sha512-4r4HfDsfifBu40SweZsN/rG/Im0sR7qHn8gHHniSyzgO+0bXCK/qtBOmEHD2+VKWM/Mk7Q9S9ZuV9OPiqQyr2w=="
+  "resolved" "https://registry.npmjs.org/@tropicbliss/symphonia-win32-x64-msvc/-/symphonia-win32-x64-msvc-0.2.19.tgz"
+  "version" "0.2.19"
+
+"@tropicbliss/symphonia@^0.2.19":
+  "integrity" "sha512-+ArDTiUvzb5jm7s6sSPLu1Kr3XMdZS9DLMdkADoHjCUNxHRzi6W6fGaPcvF6OO4MzpdxzU1T93y3XW0t8Fogyg=="
+  "resolved" "https://registry.npmjs.org/@tropicbliss/symphonia/-/symphonia-0.2.19.tgz"
+  "version" "0.2.19"
+  optionalDependencies:
+    "@tropicbliss/symphonia-darwin-arm64" "0.2.19"
+    "@tropicbliss/symphonia-darwin-x64" "0.2.19"
+    "@tropicbliss/symphonia-linux-x64-gnu" "0.2.19"
+    "@tropicbliss/symphonia-win32-ia32-msvc" "0.2.19"
+    "@tropicbliss/symphonia-win32-x64-msvc" "0.2.19"
+
 "@types/eslint-scope@^3.7.3":
   "integrity" "sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA=="
   "resolved" "https://registry.npmjs.org/@types/eslint-scope/-/eslint-scope-3.7.4.tgz"
