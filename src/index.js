@@ -169,7 +169,7 @@ function startTimer() {
 
 // Function to log a message in the log panel
 function logMessage(message) {
-    const currentText = "sdfmsakdf";
+    const currentText = logPanel.text();
     const newText = `${message}\n${currentText}`;
 
     // Display only the last three lines
