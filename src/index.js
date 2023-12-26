@@ -44,7 +44,6 @@ startTimerLineEdit.addEventListener("returnPressed",startTimer);
 
 const logPanel = new QLabel();
 logPanel.setObjectName('logPanel');
-logPanel.setFixedHeight(100); // Set the height as needed
 
 // Container for labels
 const labelsContainer = new QWidget();
@@ -109,6 +108,10 @@ win.setStyleSheet(`
         width: 15px;
         height: 15px;
     }
+
+    #logPanel {
+        height: 40px;
+    }
 `);
 win.setWindowFlag(WindowType.FramelessWindowHint, true);
 win.setWindowFlag(WindowType.Widget, true);
@@ -156,8 +159,8 @@ function startTimer() {
             playAlert(formattedTime, "Stack zamanı!", path.join(__dirname, 'assets/stack_alarm.mp3'));
         }
 
-        if (secondsPassed % 60 === 40) {
-            playAlert(formattedTime, "Stack zamanı!", path.join(__dirname, 'assets/stack_alarm.mp3'));
+        if (secondsPassed % 165 === 0) {
+            playAlert(formattedTime, "Lotus çıkıyo!", path.join(__dirname, 'assets/lotus_alarm.mp3'));
         }
     }, 1000);
 }
