@@ -1,11 +1,6 @@
-const { QMainWindow, QWidget, FlexLayout, QLabel,WindowType, QPushButton, QDragMoveEvent, QMouseEvent,WidgetEventTypes,QPlainTextEdit } = require("@nodegui/nodegui");
+const { QMainWindow, QWidget, FlexLayout, QLabel,WindowType, QPushButton, QDragMoveEvent, QMouseEvent,WidgetEventTypes,QPlainTextEdit, WidgetAttribute } = require("@nodegui/nodegui");
 //const sound = require("sound-play");
 const path = require('path');
-const url = require('url');
-
-const fs = require('fs')
-const symphonia = require('@tropicbliss/symphonia')
-
 const fs = require('fs')
 const symphonia = require('@tropicbliss/symphonia')
 
@@ -43,11 +38,9 @@ startTimerButton.setText("s");
 startTimerButton.setObjectName("startTimerButton");
 startTimerButton.addEventListener('clicked', startTimer);
 
-const logPanel = new QPlainTextEdit();
+const logPanel = new QLabel();
 logPanel.setObjectName('logPanel');
-logPanel.setReadOnly(true);
 logPanel.setFixedHeight(100); // Set the height as needed
-logPanel.setAutoFillBackground(false);
 
 const dragIcon = new QLabel();
 dragIcon.setText("🚀");
@@ -120,10 +113,6 @@ win.setStyleSheet(`
         width: 15px;
         height: 15px;
     }
-
-    #logPanel {
-        background: transparent;
-    }
 `);
 win.setWindowFlag(WindowType.FramelessWindowHint, true);
 win.setWindowFlag(WindowType.Widget, true);
@@ -135,7 +124,7 @@ win.show();
 
 global.win = win; // prevent's gc of win
 
-playAlert("0", "Stack zamanı!", path.join(__dirname, 'assets/stack_alarm.mp3'));
+playAlert("0", "Hello world!", path.join(__dirname, 'assets/stack_alarm.mp3'));
 
 function playAlert(formattedTime, message, file = "", volume =  0.5) {
     if (file)
@@ -180,14 +169,14 @@ function startTimer() {
 
 // Function to log a message in the log panel
 function logMessage(message) {
-    const currentText = logPanel.toPlainText();
+    const currentText = "sdfmsakdf";
     const newText = `${message}\n${currentText}`;
 
     // Display only the last three lines
     const lines = newText.split('\n').slice(0, 3);
     const truncatedText = lines.join('\n');
 
-    logPanel.setPlainText(truncatedText);
+    logPanel.setText(truncatedText);
 }
 
 // Event: Close window
