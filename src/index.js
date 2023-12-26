@@ -6,6 +6,9 @@ const url = require('url');
 const fs = require('fs')
 const symphonia = require('@tropicbliss/symphonia')
 
+const fs = require('fs')
+const symphonia = require('@tropicbliss/symphonia')
+
 const rootView = new QWidget();
 rootView.setObjectName("rootView");
 
