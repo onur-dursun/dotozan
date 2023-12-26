@@ -1,4 +1,4 @@
-const { QMainWindow, QWidget, FlexLayout, QLabel,WindowType, QPushButton, QDragMoveEvent, QMouseEvent,WidgetEventTypes,QPlainTextEdit, WidgetAttribute } = require("@nodegui/nodegui");
+const { QMainWindow, QWidget, FlexLayout, QLabel,WindowType, QPushButton, QDragMoveEvent, QMouseEvent,WidgetEventTypes,QPlainTextEdit, WidgetAttribute, QLineEdit } = require("@nodegui/nodegui");
 //const sound = require("sound-play");
 const path = require('path');
 const fs = require('fs')
@@ -15,33 +15,6 @@ mainContainer.setObjectName("mainContainer");
 
 rootView.setLayout(mainLayout);
 
-// Create two widgets - one label and one view
-const label = new QLabel();
-label.setText("Hello");
-label.setObjectName("label");
-
-const messageLabel = new QLabel();
-label.setText("Message");
-
-const timerLabel = new QLabel();
-label.setText("Timer");
-
-const closeButton = new QPushButton();
-closeButton.setObjectName("closeButton");
-closeButton.setText("x");
-closeButton.addEventListener('clicked', () => {
-    global.win.close();
-});
-
-const startTimerButton = new QPushButton();
-startTimerButton.setText("s");
-startTimerButton.setObjectName("startTimerButton");
-startTimerButton.addEventListener('clicked', startTimer);
-
-const logPanel = new QLabel();
-logPanel.setObjectName('logPanel');
-logPanel.setFixedHeight(100); // Set the height as needed
-
 const dragIcon = new QLabel();
 dragIcon.setText("🚀");
 dragIcon.setObjectName('dragIcon');
@@ -50,6 +23,28 @@ dragIcon.addEventListener(WidgetEventTypes.MouseMove, (e) => {
     let ev = new QMouseEvent(e);
     win.move(ev.globalX() -180, ev.globalY() - dragIcon.y())
 });
+
+// Create two widgets - one label and one view
+const closeButton = new QPushButton();
+closeButton.setObjectName("closeButton");
+closeButton.setText("x");
+closeButton.addEventListener('clicked', () => {
+    global.win.close();
+});
+
+const messageLabel = new QLabel();
+messageLabel.setText("Message");
+
+const timerLabel = new QLabel();
+timerLabel.setText("Timer");
+
+const startTimerLineEdit = new QLineEdit();
+startTimerLineEdit.setText("-50");
+startTimerLineEdit.addEventListener("returnPressed",startTimer);
+
+const logPanel = new QLabel();
+logPanel.setObjectName('logPanel');
+logPanel.setFixedHeight(100); // Set the height as needed
 
 // Container for labels
 const labelsContainer = new QWidget();
@@ -61,6 +56,7 @@ labelsContainer.setObjectName("labelsContainer");
 //labelsLayout.addWidget(label);
 labelsLayout.addWidget(messageLabel);
 labelsLayout.addWidget(timerLabel);
+labelsLayout.addWidget(logPanel);
 
 // Container for buttons
 const buttonsContainer = new QWidget();
@@ -71,12 +67,11 @@ buttonsContainer.setObjectName("buttonsContainer");
 // Now tell buttonsContainer layout that the closeButton is its child
 buttonsLayout.addWidget(dragIcon);
 buttonsLayout.addWidget(closeButton);
-buttonsLayout.addWidget(startTimerButton);
+buttonsLayout.addWidget(startTimerLineEdit);
 
 // Now tell mainContainer layout that the labelsContainer, view, and buttonsContainer are its children
 mainLayout.addWidget(buttonsContainer);
 mainLayout.addWidget(labelsContainer);
-mainLayout.addWidget(logPanel);
 
 const win = new QMainWindow();
 win.setStyleSheet(`
@@ -94,12 +89,13 @@ win.setStyleSheet(`
     #labelsContainer {
         align-items: 'flex-end';
         flex: 1;
-        width: 100px;
+        width: 150px;
     }
 
     #buttonsContainer {
         align-items: 'flex-end';
         padding: 5px;
+        width: 30px;
     }
 
     #closeButton {
@@ -124,7 +120,7 @@ win.show();
 
 global.win = win; // prevent's gc of win
 
-playAlert("0", "Hello world!", path.join(__dirname, 'assets/stack_alarm.mp3'));
+playAlert("0", "sqqozan", path.join(__dirname, 'assets/stack_alarm.mp3'));
 
 function playAlert(formattedTime, message, file = "", volume =  0.5) {
     if (file)
@@ -137,20 +133,16 @@ function playAlert(formattedTime, message, file = "", volume =  0.5) {
     logMessage(`Timer: ${formattedTime} - ` + message);
 }
 
-// Set up the timer
-let secondsPassed = 35;
-let formattedTime = formatTime(secondsPassed);
-timerLabel.setText(`Timer: ${formattedTime}`);
-
 let timerIntervalId;
 
 function startTimer() {
 
+    let secondsPassed = startTimerLineEdit.text();
     // Clear any existing interval
     clearInterval(timerIntervalId);
 
     // Timer to update the timerLabel and play alert every second
-    const intervalId = setInterval(() => {
+    timerIntervalId = setInterval(() => {
         secondsPassed++;
 
         // Format seconds into HH:MM:SS
@@ -158,11 +150,14 @@ function startTimer() {
         
         // Update the timerLabel with the formatted time
         timerLabel.setText(`Timer: ${formattedTime}`);
-        let message = "Stack zamanı!";
-        playAlert(formattedTime, message);
+
         // Play an alert every 45th second of a minute
         if (secondsPassed % 60 === 40) {
-            playAlert(formattedTime, message, path.join(__dirname, 'assets/stack_alarm.mp3'));
+            playAlert(formattedTime, "Stack zamanı!", path.join(__dirname, 'assets/stack_alarm.mp3'));
+        }
+
+        if (secondsPassed % 60 === 40) {
+            playAlert(formattedTime, "Stack zamanı!", path.join(__dirname, 'assets/stack_alarm.mp3'));
         }
     }, 1000);
 }
