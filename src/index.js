@@ -1,4 +1,4 @@
-const { QMainWindow, QWidget, FlexLayout, QLabel,WindowType, QPushButton, QDragMoveEvent, QMouseEvent,WidgetEventTypes,QPlainTextEdit, WidgetAttribute, QLineEdit } = require("@nodegui/nodegui");
+const { QMainWindow, QWidget, FlexLayout, QLabel,WindowType, QPushButton, QCheckBox, QMouseEvent,WidgetEventTypes,QPlainTextEdit, WidgetAttribute, QLineEdit } = require("@nodegui/nodegui");
 //const sound = require("sound-play");
 const path = require('path');
 const fs = require('fs')
@@ -14,6 +14,8 @@ mainContainer.setLayout(mainLayout);
 mainContainer.setObjectName("mainContainer");
 
 rootView.setLayout(mainLayout);
+
+const checkbox = new QCheckBox();
 
 const dragIcon = new QLabel();
 dragIcon.setText("🚀");
@@ -32,8 +34,8 @@ closeButton.addEventListener('clicked', () => {
     global.win.close();
 });
 
-const messageLabel = new QLabel();
-messageLabel.setText("Message");
+// const messageLabel = new QLabel();
+// messageLabel.setText("Message");
 
 const timerLabel = new QLabel();
 timerLabel.setText("Timer");
@@ -53,7 +55,7 @@ labelsContainer.setObjectName("labelsContainer");
 
 // Now tell labelsContainer layout that the labels are its children
 //labelsLayout.addWidget(label);
-labelsLayout.addWidget(messageLabel);
+//labelsLayout.addWidget(messageLabel);
 labelsLayout.addWidget(timerLabel);
 labelsLayout.addWidget(logPanel);
 
@@ -66,6 +68,7 @@ buttonsContainer.setObjectName("buttonsContainer");
 // Now tell buttonsContainer layout that the closeButton is its child
 buttonsLayout.addWidget(dragIcon);
 buttonsLayout.addWidget(closeButton);
+buttonsLayout.addWidget(checkbox);
 buttonsLayout.addWidget(startTimerLineEdit);
 
 // Now tell mainContainer layout that the labelsContainer, view, and buttonsContainer are its children
@@ -125,14 +128,14 @@ global.win = win; // prevent's gc of win
 
 playAlert("0", "sqqozan", path.join(__dirname, 'assets/stack_alarm.mp3'));
 
-function playAlert(formattedTime, message, file = "", volume =  0.5) {
-    if (file)
+function playAlert(formattedTime, message, file = "", volume =  0.3) {
+    if (file && checkbox.isChecked())
     {
         const buf = fs.readFileSync(file); // Gets a Buffer
         symphonia.playFromBuf(buf, { speed: 1.0, volume: volume, isBlocking: false });
     }
 
-    messageLabel.setText(message);
+    //messageLabel.setText(message);
     logMessage(`Timer: ${formattedTime} - ` + message);
 }
 
@@ -152,15 +155,51 @@ function startTimer() {
         let formattedTime = formatTime(secondsPassed);
         
         // Update the timerLabel with the formatted time
-        timerLabel.setText(`Timer: ${formattedTime}`);
+        timerLabel.setText(`${formattedTime}`);
 
         // Play an alert every 45th second of a minute
         if (secondsPassed % 60 === 40) {
             playAlert(formattedTime, "Stack zamanı!", path.join(__dirname, 'assets/stack_alarm.mp3'));
         }
 
-        if (secondsPassed % 165 === 0) {
-            playAlert(formattedTime, "Lotus çıkıyo!", path.join(__dirname, 'assets/lotus_alarm.mp3'));
+        if (secondsPassed % 180 === 165) {
+            playAlert(formattedTime, "Lotus, Bounty çıkıyo!", path.join(__dirname, 'assets/lotus_alarm.mp3'));
+        }
+
+        if (secondsPassed === 420) {
+            playAlert(formattedTime, "NC itemi lvl 1 çıktı!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed === 900) {
+            playAlert(formattedTime, "NC itemi lvl 2 çıktı!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed === 1620) {
+            playAlert(formattedTime, "NC itemi lvl 3 çıktı!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed === 2220) {
+            playAlert(formattedTime, "NC itemi lvl 4 çıktı!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed === 3600) {
+            playAlert(formattedTime, "NC itemi lvl 5 çıktı!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed === 1170) {
+            playAlert(formattedTime, "Tormentor çıkıyo!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed >= 300 && secondsPassed % 120 == 105) {
+            playAlert(formattedTime, "Power rune çıkıyo!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed % 600 === 295) {
+            playAlert(formattedTime, "Gece oluyo! Roshan aşağı iniyo!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
+        }
+
+        if (secondsPassed % 600 === 595) {
+            playAlert(formattedTime, "Gündüz oluyo! Roshan yukarı çıkıyo!", path.join(__dirname, 'assets/nc1_alarm.mp3'));
         }
     }, 1000);
 }
